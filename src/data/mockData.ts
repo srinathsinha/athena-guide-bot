@@ -94,21 +94,21 @@ export const mockKnowledgeGaps: KnowledgeGap[] = [
       {
         id: 'no-flag-check',
         label: '🅰️',
-        description: '#1342 implements without a flag check',
+        description: '#1342 `async_invoice_dispatch` implements without a flag check',
         isRecommended: false,
         repoLink: 'https://github.com/company/billing-core/blob/main/src/invoice-bad.ts#L23'
       },
       {
         id: 'flag-no-logging',
         label: '🅱️',
-        description: '#1289 implements it as a check but without fallback logging',
+        description: '#1289 `async_invoice_dispatch` implements it as a check but without fallback logging',
         isRecommended: false,
         repoLink: 'https://github.com/company/billing-core/blob/main/src/invoice-partial.ts#L31'
       },
       {
         id: 'flag-with-logging',
-        label: '🆎',
-        description: '#1337 implement flag check + fallback logging',
+        label: 'C',
+        description: '[proposed] implement flag check + fallback logging',
         isRecommended: true,
         repoLink: 'https://github.com/company/billing-core/blob/main/src/invoice-good.ts#L28'
       }
