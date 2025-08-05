@@ -54,7 +54,7 @@ export default function Welcome() {
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Time to value isn't consistently low</h3>
-                  <p className="text-sm text-muted-foreground">New team members struggle to see immediate benefits and quick wins from AI-powered tools during onboarding</p>
+                  <p className="text-sm text-muted-foreground">New teams struggle to see quick wins during onboarding</p>
                 </div>
               </div>
               <div className="flex items-start gap-3 p-4 rounded-lg bg-muted/30">
@@ -63,7 +63,7 @@ export default function Welcome() {
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Experts can't assess how good Resolve is during/right after onboarding</h3>
-                  <p className="text-sm text-muted-foreground">Domain experts lack visibility into system performance and effectiveness during the critical onboarding period</p>
+                  <p className="text-sm text-muted-foreground">No visibility into system performance during critical early stages</p>
                 </div>
               </div>
             </div>
