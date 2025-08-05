@@ -190,9 +190,9 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
         >
           <div className="space-y-3">
             <p>🅲️ <strong>Pattern C is the way to go.</strong></p>
-            <div className="bg-green-50 border border-green-200 rounded p-3">
-              <p className="text-green-800 text-sm font-medium mb-2">Why Pattern C:</p>
-              <div className="text-sm text-green-700 space-y-1">
+            <div className="space-y-1">
+              <p className="text-sm font-medium mb-2">Why Pattern C:</p>
+              <div className="text-sm space-y-1">
                 <p>• ✅ Aligns with our observability rollout policy</p>
                 <p>• ✅ Metrics help us track adoption rates and make data-driven decisions</p>
                 <p>• ✅ Logging catches unexpected behavior during rollouts</p>
