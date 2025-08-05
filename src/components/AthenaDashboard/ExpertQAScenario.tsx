@@ -54,12 +54,11 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
         <div className="space-y-4">
           <p>🚨 <strong>High Priority:</strong> 3 production incidents this week traced to inconsistent <code>async_invoice_dispatch</code> feature flag usage</p>
           
-          <div className="bg-red-50 border border-red-200 rounded p-3">
+          <div className="pl-4 border-l-2 border-red-400">
             <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle className="h-4 w-4 text-red-600" />
-              <span className="font-medium text-red-800">Impact Summary</span>
+              <span className="font-medium text-red-600">Impact Summary</span>
             </div>
-            <div className="text-sm text-red-700 space-y-1">
+            <div className="text-sm space-y-1">
               <p>• $47K in failed invoice processing</p>
               <p>• 2.3 hours average resolution time</p>
               <p>• 5 different implementation patterns found across codebase</p>
@@ -72,26 +71,20 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
             </div>
             {gap.incidentLinks?.map((incident) => (
               <div key={incident.id} className="ml-4 text-sm">
-                <a 
-                  href={incident.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline flex items-center gap-1"
-                >
+                <span className="text-blue-400 hover:underline cursor-pointer">
                   {incident.id}: {incident.title}
-                  <ExternalLink className="h-3 w-3" />
-                </a>
+                </span>
               </div>
             ))}
           </div>
 
-          <div className="bg-blue-50 border border-blue-200 rounded p-3">
-            <p className="text-blue-800 text-sm">
+          <div className="pl-4 border-l-2 border-blue-400">
+            <p className="text-sm">
               🤖 <strong>My analysis:</strong> We should standardize on Pattern C (enhanced with metrics + logging) to prevent future incidents and improve observability.
             </p>
             <button 
               onClick={() => setShowOptions(!showOptions)}
-              className="text-blue-800 text-sm mt-2 hover:underline flex items-center gap-1"
+              className="text-blue-400 text-sm mt-2 hover:underline flex items-center gap-1"
             >
               <span className={`transform transition-transform ${showOptions ? 'rotate-90' : ''}`}>▶</span>
               Options in 🧵
@@ -233,13 +226,12 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
                 </div>
               </div>
               
-              <div className="flex gap-2 text-xs">
-                <Button variant="link" size="sm" className="p-0 h-auto">
-                  🙏 Want to help? [Answer Next Question]
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm">
+                  Want to help? Answer Next Question
                 </Button>
-                <Button variant="link" size="sm" className="p-0 h-auto">|</Button>
-                <Button variant="link" size="sm" className="p-0 h-auto">
-                  [Nominate Expert]
+                <Button variant="outline" size="sm">
+                  Nominate Expert
                 </Button>
               </div>
             </div>
@@ -257,15 +249,9 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
               <CardContent className="space-y-3">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
-                    <ExternalLink className="h-4 w-4" />
-                    <a 
-                      href="https://github.com/company/docs/blob/main/feature-flags.md" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="font-medium text-sm text-blue-500 hover:underline"
-                    >
+                    <span className="font-medium text-sm text-blue-400 hover:underline cursor-pointer">
                       /docs/feature-flags.md
-                    </a>
+                    </span>
                   </div>
                   <p className="text-xs text-muted-foreground">Section: Async Invoice Dispatch</p>
                 </div>
@@ -279,26 +265,12 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
                 </div>
                 
                 <div className="flex gap-2">
-                  <a 
-                    href="https://github.com/company/docs/blob/main/feature-flags.md" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    <Button variant="outline" size="sm" className="flex items-center gap-1">
-                      <ExternalLink className="h-3 w-3" />
-                      View Documentation
-                    </Button>
-                  </a>
-                  <a 
-                    href="https://github.com/company/docs/blob/main/README.md" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    <Button variant="outline" size="sm" className="flex items-center gap-1">
-                      <ExternalLink className="h-3 w-3" />
-                      View README
-                    </Button>
-                  </a>
+                  <Button variant="outline" size="sm">
+                    View Documentation
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    View README
+                  </Button>
                 </div>
               </CardContent>
             </Card>
