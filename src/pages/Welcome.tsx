@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
-import { Sparkles, Bot, Users, GitPullRequest, MessageSquare, BarChart3 } from 'lucide-react';
+import { Sparkles, Bot, GitPullRequest, MessageSquare, BarChart3 } from 'lucide-react';
 
 export default function Welcome() {
   const navigate = useNavigate();
@@ -100,7 +100,7 @@ export default function Welcome() {
               Start with the Daily Digest to see Athena's knowledge gap analysis
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
+          <CardContent className="flex justify-center">
             <Button 
               onClick={() => navigate('/demo?scenario=digest')}
               className="flex items-center gap-2"
@@ -108,14 +108,6 @@ export default function Welcome() {
             >
               <Sparkles className="h-4 w-4" />
               Start Demo
-            </Button>
-            <Button 
-              variant="outline" 
-              onClick={() => navigate('/demo?scenario=digest&help=true')}
-              size="lg"
-            >
-              <Users className="h-4 w-4 mr-2" />
-              Guided Tour
             </Button>
           </CardContent>
         </Card>
