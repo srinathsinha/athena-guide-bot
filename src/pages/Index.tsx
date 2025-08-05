@@ -176,31 +176,6 @@ const Index = () => {
               </Button>
             </div>
           </div>
-          
-          {/* Navigation */}
-          <div className="flex gap-2 mt-4">
-            <Button
-              variant={currentScenario === 'digest' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => handleScenarioChange('digest')}
-            >
-              Daily Digest
-            </Button>
-            <Button
-              variant={currentScenario === 'auto-pr' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => handleScenarioChange('auto-pr', 'retry-logic-stripe')}
-            >
-              Auto-PR Flow
-            </Button>
-            <Button
-              variant={currentScenario === 'qna' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => handleScenarioChange('qna', 'feature-flag-invoice')}
-            >
-              Expert Q&A Flow
-            </Button>
-          </div>
         </div>
       </div>
 
