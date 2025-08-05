@@ -15,12 +15,15 @@ export interface KnowledgeGap {
   expert: Expert;
   nominatedBy: Expert;
   incident?: string;
+  incidentLinks?: { id: string; url: string; title: string; }[];
+  reasoning?: string;
   status?: 'pending' | 'approved' | 'rejected';
   patterns: {
     id: string;
     label: string;
     description: string;
     isRecommended: boolean;
+    repoLink?: string;
   }[];
 }
 

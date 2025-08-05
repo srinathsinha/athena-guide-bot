@@ -64,24 +64,32 @@ export const mockKnowledgeGaps: KnowledgeGap[] = [
     expert: mockExperts[1], // Bob
     nominatedBy: mockExperts[2], // Charlie
     incident: '#1342',
+    incidentLinks: [
+      { id: '#1342', url: 'https://github.com/company/billing-core/pull/1342', title: 'Fix: Premature invoice dispatch in staging' },
+      { id: '#1289', url: 'https://github.com/company/billing-core/pull/1289', title: 'Hotfix: Invoice processing without flag check' }
+    ],
+    reasoning: 'Pattern C ensures feature flag control with observability. Without logging (B), we lose visibility into flag effectiveness. Without flag checks (A), we risk uncontrolled rollouts.',
     patterns: [
       {
         id: 'no-flag-check',
         label: '🅰️',
         description: 'No flag check',
-        isRecommended: false
+        isRecommended: false,
+        repoLink: 'https://github.com/company/billing-core/blob/main/src/invoice-bad.ts#L23'
       },
       {
         id: 'flag-no-logging',
         label: '🅱️',
         description: 'Flag check without fallback logging',
-        isRecommended: false
+        isRecommended: false,
+        repoLink: 'https://github.com/company/billing-core/blob/main/src/invoice-partial.ts#L31'
       },
       {
         id: 'flag-with-logging',
-        label: '🆎',
+        label: 'C',
         description: 'Flag check + logging fallback',
-        isRecommended: true
+        isRecommended: true,
+        repoLink: 'https://github.com/company/billing-core/blob/main/src/invoice-good.ts#L28'
       }
     ]
   }

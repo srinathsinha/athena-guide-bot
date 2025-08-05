@@ -7,13 +7,14 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { KnowledgeGap } from '@/types/athena';
-import { FileText } from 'lucide-react';
+import { FileText, ExternalLink, AlertTriangle } from 'lucide-react';
 
 interface ExpertQAScenarioProps {
   gap: KnowledgeGap;
+  onComplete?: () => void;
 }
 
-export function ExpertQAScenario({ gap }: ExpertQAScenarioProps) {
+export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
   const [selectedPattern, setSelectedPattern] = useState<string>();
   const [showExpertResponse, setShowExpertResponse] = useState(false);
   const [showUpdate, setShowUpdate] = useState(false);
@@ -34,7 +35,13 @@ export function ExpertQAScenario({ gap }: ExpertQAScenarioProps) {
   const handlePatternSelect = (patternId: string) => {
     setSelectedPattern(patternId);
     setShowExpertResponse(true);
-    setTimeout(() => setShowUpdate(true), 1000);
+    setTimeout(() => {
+      setShowUpdate(true);
+      // Auto-complete and return to digest after documentation is shown
+      setTimeout(() => {
+        onComplete?.();
+      }, 3000);
+    }, 1000);
   };
 
   return (
@@ -53,15 +60,43 @@ export function ExpertQAScenario({ gap }: ExpertQAScenarioProps) {
           
           <p>👨‍💻 Expert: {gap.expert.slackHandle} (nominated by {gap.nominatedBy.slackHandle})</p>
           
-          <p>🧨 Linked Incident: {gap.incident} (premature dispatch in staging)</p>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4 text-orange-500" />
+              <span className="font-medium">Root-cause incidents:</span>
+            </div>
+            {gap.incidentLinks?.map((incident) => (
+              <div key={incident.id} className="ml-6">
+                <a 
+                  href={incident.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline flex items-center gap-1 text-sm"
+                >
+                  {incident.id}: {incident.title}
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+              </div>
+            ))}
+          </div>
+
+          {gap.reasoning && (
+            <div className="bg-blue-50 border border-blue-200 rounded p-3">
+              <div className="flex items-start gap-2">
+                <span className="text-blue-600 font-medium">🤖 Athena's analysis:</span>
+              </div>
+              <p className="text-sm text-blue-800 mt-1">{gap.reasoning}</p>
+            </div>
+          )}
           
           <PatternSelector
             patterns={gap.patterns}
             selectedPattern={selectedPattern}
             onSelect={handlePatternSelect}
+            showRecommendation={true}
           />
           
-          <p className="text-sm">{gap.expert.slackHandle}, which pattern should be standardized?</p>
+          <p className="text-sm font-medium">{gap.expert.slackHandle}, please hit A, B, or C to indicate your choice 👇</p>
         </div>
       </SlackMessage>
 
@@ -72,7 +107,7 @@ export function ExpertQAScenario({ gap }: ExpertQAScenarioProps) {
           isThread
         >
           <div className="space-y-2">
-            <p>Pattern 🆎 is correct. Aligns with rollout policy + logs behavior.</p>
+            <p>Pattern C is correct. Aligns with rollout policy + logs behavior.</p>
             <p className="text-sm text-muted-foreground">
               "Always check the flag first, and log when disabled for observability. 
               This helps us track feature adoption and debug issues."
@@ -130,8 +165,18 @@ export function ExpertQAScenario({ gap }: ExpertQAScenarioProps) {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div>
-                  <p className="font-medium text-sm">File: /docs/feature-flags.md</p>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <ExternalLink className="h-4 w-4" />
+                    <a 
+                      href="https://github.com/company/docs/blob/main/feature-flags.md" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="font-medium text-sm text-blue-500 hover:underline"
+                    >
+                      /docs/feature-flags.md
+                    </a>
+                  </div>
                   <p className="text-xs text-muted-foreground">Section: Async Invoice Dispatch</p>
                 </div>
                 
@@ -143,9 +188,28 @@ export function ExpertQAScenario({ gap }: ExpertQAScenarioProps) {
                   <p>❌ Avoid dynamically constructing flag names</p>
                 </div>
                 
-                <Button variant="outline" size="sm">
-                  View Full Documentation
-                </Button>
+                <div className="flex gap-2">
+                  <a 
+                    href="https://github.com/company/docs/blob/main/feature-flags.md" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    <Button variant="outline" size="sm" className="flex items-center gap-1">
+                      <ExternalLink className="h-3 w-3" />
+                      View Documentation
+                    </Button>
+                  </a>
+                  <a 
+                    href="https://github.com/company/docs/blob/main/README.md" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    <Button variant="outline" size="sm" className="flex items-center gap-1">
+                      <ExternalLink className="h-3 w-3" />
+                      View README
+                    </Button>
+                  </a>
+                </div>
               </CardContent>
             </Card>
           </div>

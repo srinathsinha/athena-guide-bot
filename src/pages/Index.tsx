@@ -66,6 +66,24 @@ const Index = () => {
     }
   };
 
+  const handleExpertQAComplete = () => {
+    if (selectedGapId) {
+      // Show expert response success
+      toast({
+        title: "✅ Expert Feedback Integrated",
+        description: "Documentation updated and knowledge graph improved!",
+      });
+
+      // Add to approved gaps
+      setApprovedGaps(prev => new Set([...prev, selectedGapId]));
+
+      // Navigate back to digest after a brief delay
+      setTimeout(() => {
+        handleScenarioChange('digest');
+      }, 1500);
+    }
+  };
+
   const handleReject = () => {
     toast({
       title: "PR Rejected",
@@ -152,7 +170,7 @@ const Index = () => {
           )}
 
           {currentScenario === 'qna' && selectedGap && (
-            <ExpertQAScenario gap={selectedGap} />
+            <ExpertQAScenario gap={selectedGap} onComplete={handleExpertQAComplete} />
           )}
         </div>
       </div>
