@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
-import { Sparkles, Bot, GitPullRequest, MessageSquare, BarChart3 } from 'lucide-react';
+import { Sparkles, Bot, GitPullRequest, MessageSquare, BarChart3, Clock, Award } from 'lucide-react';
 
 export default function Welcome() {
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ export default function Welcome() {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="flex items-start gap-3 p-4 rounded-lg bg-muted/30">
                 <div className="flex-shrink-0 p-2 rounded-md bg-destructive/10 text-destructive">
-                  <MessageSquare className="h-5 w-5" />
+                  <Clock className="h-5 w-5" />
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Time to value isn't consistently low</h3>
@@ -59,7 +59,7 @@ export default function Welcome() {
               </div>
               <div className="flex items-start gap-3 p-4 rounded-lg bg-muted/30">
                 <div className="flex-shrink-0 p-2 rounded-md bg-destructive/10 text-destructive">
-                  <BarChart3 className="h-5 w-5" />
+                  <Award className="h-5 w-5" />
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Experts can't assess slope of hill-climb to quality</h3>
