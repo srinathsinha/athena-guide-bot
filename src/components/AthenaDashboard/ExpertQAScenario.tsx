@@ -86,7 +86,7 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
 
           <div className="bg-blue-50 border border-blue-200 rounded p-3">
             <p className="text-blue-800 text-sm">
-              🤖 <strong>My analysis:</strong> Found conflicting patterns. Need expert guidance to establish the canonical approach and prevent future incidents.
+              🤖 <strong>My analysis:</strong> We should standardize on Pattern C (enhanced with metrics + logging) to prevent future incidents and improve observability. Options in :thread:
             </p>
           </div>
         </div>
@@ -105,78 +105,74 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
             <p>• Response time: Usually &lt; 30min</p>
           </div>
           
-          <div className="bg-gray-50 border rounded p-3">
-            <p className="font-medium mb-3">🔍 Found these implementation patterns in our codebase:</p>
+          <div className="space-y-4">
+            <p className="font-medium">🔍 Found these implementation patterns in our codebase:</p>
             
-            <div className="space-y-4">
-              {gap.patterns.map((pattern) => (
-                <div key={pattern.id} className="border rounded p-3 bg-white">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="font-mono text-2xl">{pattern.label}</span>
-                    <span className="font-medium">{pattern.description}</span>
-                    {pattern.isRecommended && (
-                      <Badge variant="secondary" className="text-xs">🤖 My preference</Badge>
-                    )}
-                  </div>
-                  
-                  {/* Show code example based on pattern */}
-                  <div className="bg-gray-900 text-gray-100 p-3 rounded text-sm font-mono mt-2">
-                    {pattern.id === 'pattern-a' && (
-                      <div>
-                        <div className="text-green-400">// Pattern A: Check flag then enqueue</div>
-                        <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
-                        <div className="ml-4">await enqueueInvoice(invoiceData);</div>
-                        <div>{`}`}</div>
-                      </div>
-                    )}
-                    {pattern.id === 'pattern-b' && (
-                      <div>
-                        <div className="text-green-400">// Pattern B: Check flag with logging</div>
-                        <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
-                        <div className="ml-4">await enqueueInvoice(invoiceData);</div>
-                        <div>{`}`} else {`{`}</div>
-                        <div className="ml-4">logger.info("async_invoice_dispatch disabled");</div>
-                        <div>{`}`}</div>
-                      </div>
-                    )}
-                    {pattern.id === 'pattern-c' && (
-                      <div>
-                        <div className="text-green-400">// Pattern C: Enhanced with metrics</div>
-                        <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
-                        <div className="ml-4">metrics.increment("invoice.async.enabled");</div>
-                        <div className="ml-4">await enqueueInvoice(invoiceData);</div>
-                        <div>{`}`} else {`{`}</div>
-                        <div className="ml-4">metrics.increment("invoice.async.disabled");</div>
-                        <div className="ml-4">logger.info("async_invoice_dispatch disabled");</div>
-                        <div>{`}`}</div>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Emoji reaction buttons */}
-                  <div className="mt-3 flex items-center gap-2">
-                    <button
-                      onClick={() => handlePatternSelect(pattern.id)}
-                      className={`text-2xl hover:scale-110 transition-transform ${selectedPattern === pattern.id ? 'bg-primary/10 rounded p-1' : 'hover:bg-muted/50 rounded p-1'}`}
-                    >
-                      {pattern.id === 'pattern-a' && '🅰️'}
-                      {pattern.id === 'pattern-b' && '🅱️'}
-                      {pattern.id === 'pattern-c' && '©️'}
-                    </button>
-                    <span className="text-xs text-muted-foreground">Click to vote for this pattern</span>
+            <div className="space-y-3 pl-4">
+              <div className="flex items-start gap-3">
+                <button
+                  onClick={() => handlePatternSelect('pattern-a')}
+                  className={`text-2xl hover:scale-110 transition-transform ${selectedPattern === 'pattern-a' ? 'bg-primary/10 rounded p-1' : 'hover:bg-muted/50 rounded p-1'}`}
+                >
+                  🅰️
+                </button>
+                <div className="flex-1">
+                  <div className="font-medium">Simple flag check</div>
+                  <div className="bg-gray-900 text-gray-100 p-2 rounded text-xs font-mono mt-1">
+                    <div className="text-green-400">// Pattern A: Check flag then enqueue</div>
+                    <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
+                    <div className="ml-4">await enqueueInvoice(invoiceData);</div>
+                    <div>{`}`}</div>
                   </div>
                 </div>
-              ))}
+              </div>
+
+              <div className="flex items-start gap-3">
+                <button
+                  onClick={() => handlePatternSelect('pattern-b')}
+                  className={`text-2xl hover:scale-110 transition-transform ${selectedPattern === 'pattern-b' ? 'bg-primary/10 rounded p-1' : 'hover:bg-muted/50 rounded p-1'}`}
+                >
+                  🅱️
+                </button>
+                <div className="flex-1">
+                  <div className="font-medium">Flag check with logging</div>
+                  <div className="bg-gray-900 text-gray-100 p-2 rounded text-xs font-mono mt-1">
+                    <div className="text-green-400">// Pattern B: Check flag with logging</div>
+                    <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
+                    <div className="ml-4">await enqueueInvoice(invoiceData);</div>
+                    <div>{`}`} else {`{`}</div>
+                    <div className="ml-4">logger.info("async_invoice_dispatch disabled");</div>
+                    <div>{`}`}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <button
+                  onClick={() => handlePatternSelect('pattern-c')}
+                  className={`text-2xl hover:scale-110 transition-transform ${selectedPattern === 'pattern-c' ? 'bg-primary/10 rounded p-1' : 'hover:bg-muted/50 rounded p-1'}`}
+                >
+                  ©️
+                </button>
+                <div className="flex-1">
+                  <div className="font-medium">Enhanced with metrics <Badge variant="secondary" className="text-xs ml-2">🤖 My preference</Badge></div>
+                  <div className="bg-gray-900 text-gray-100 p-2 rounded text-xs font-mono mt-1">
+                    <div className="text-green-400">// Pattern C: Enhanced with metrics</div>
+                    <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
+                    <div className="ml-4">metrics.increment("invoice.async.enabled");</div>
+                    <div className="ml-4">await enqueueInvoice(invoiceData);</div>
+                    <div>{`}`} else {`{`}</div>
+                    <div className="ml-4">metrics.increment("invoice.async.disabled");</div>
+                    <div className="ml-4">logger.info("async_invoice_dispatch disabled");</div>
+                    <div>{`}`}</div>
+                  </div>
+                </div>
+              </div>
             </div>
             
-            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
-              <p className="text-sm text-yellow-800">
-                <strong>👆 {gap.expert.slackHandle}, which pattern should we standardize on?</strong>
-              </p>
-              <p className="text-xs text-yellow-700 mt-1">
-                Click the emoji above each pattern to indicate your choice
-              </p>
-            </div>
+            <p className="mt-4">
+              👆 {gap.expert.slackHandle}, which pattern should we standardize on? Click the emoji above each pattern to indicate your choice.
+            </p>
           </div>
         </div>
       </SlackMessage>
