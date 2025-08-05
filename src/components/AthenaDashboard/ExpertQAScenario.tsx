@@ -48,30 +48,34 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
     <SlackThread title="resolve-ai-feedback">
       <SlackMessage
         author={athenaBot}
-        timestamp="9:20 AM"
+        timestamp="9:15 AM"
       >
         <div className="space-y-4">
-          <p>🤔 Athena: Inconsistent usage of `{gap.title.split('`')[1]}` feature flag detected</p>
+          <p>🚨 <strong>High Priority:</strong> 3 production incidents this week traced to inconsistent <code>async_invoice_dispatch</code> feature flag usage</p>
           
-          <div className="flex items-center gap-2">
-            <p>🛠️ Confidence: {gap.confidence}% → Needs expert review</p>
-            <Badge variant="secondary">Medium Confidence</Badge>
+          <div className="bg-red-50 border border-red-200 rounded p-3">
+            <div className="flex items-center gap-2 mb-2">
+              <AlertTriangle className="h-4 w-4 text-red-600" />
+              <span className="font-medium text-red-800">Impact Summary</span>
+            </div>
+            <div className="text-sm text-red-700 space-y-1">
+              <p>• $47K in failed invoice processing</p>
+              <p>• 2.3 hours average resolution time</p>
+              <p>• 5 different implementation patterns found across codebase</p>
+            </div>
           </div>
-          
-          <p>👨‍💻 Expert: {gap.expert.slackHandle} (nominated by {gap.nominatedBy.slackHandle})</p>
-          
+
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-orange-500" />
-              <span className="font-medium">Root-cause incidents:</span>
+              <span className="font-medium">Recent incidents:</span>
             </div>
             {gap.incidentLinks?.map((incident) => (
-              <div key={incident.id} className="ml-6">
+              <div key={incident.id} className="ml-4 text-sm">
                 <a 
                   href={incident.url} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline flex items-center gap-1 text-sm"
+                  className="text-blue-500 hover:underline flex items-center gap-1"
                 >
                   {incident.id}: {incident.title}
                   <ExternalLink className="h-3 w-3" />
@@ -80,39 +84,98 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
             ))}
           </div>
 
-          {gap.reasoning && (
-            <div className="bg-blue-50 border border-blue-200 rounded p-3">
-              <div className="flex items-start gap-2">
-                <span className="text-blue-600 font-medium">🤖 Athena's analysis:</span>
-              </div>
-              <p className="text-sm text-blue-800 mt-1">{gap.reasoning}</p>
-            </div>
-          )}
+          <div className="bg-blue-50 border border-blue-200 rounded p-3">
+            <p className="text-blue-800 text-sm">
+              🤖 <strong>My analysis:</strong> Found conflicting patterns. Need expert guidance to establish the canonical approach and prevent future incidents.
+            </p>
+          </div>
+        </div>
+      </SlackMessage>
+
+      <SlackMessage
+        author={athenaBot}
+        timestamp="9:20 AM"
+        isThread
+      >
+        <div className="space-y-4">
+          <p>📞 Requesting expert input from <strong>{gap.expert.slackHandle}</strong></p>
+          <div className="text-sm text-muted-foreground ml-4">
+            <p>• Domain: Billing & Feature Flags</p>
+            <p>• Nominated by: {gap.nominatedBy.slackHandle}</p>
+            <p>• Response time: Usually &lt; 30min</p>
+          </div>
           
-          <div className="space-y-2">
-            <p className="font-medium">📍 Summary of existing patterns found (choose the respective emoji to indicate your choice):</p>
-            <div className="space-y-1">
+          <div className="bg-gray-50 border rounded p-3">
+            <p className="font-medium mb-3">🔍 Found these implementation patterns in our codebase:</p>
+            
+            <div className="space-y-4">
               {gap.patterns.map((pattern) => (
-                <div key={pattern.id}>
-                  <button
-                    onClick={() => handlePatternSelect(pattern.id)}
-                    className={`text-left w-full p-2 rounded hover:bg-muted/50 ${selectedPattern === pattern.id ? 'bg-primary/10' : ''}`}
-                  >
-                    <span className="font-mono text-lg mr-2">{pattern.label}</span>
-                    <span className="text-sm">{pattern.description}</span>
-                    {pattern.repoLink && (
-                      <span className="text-blue-500 hover:underline text-xs ml-2">
-                        <a href={pattern.repoLink} target="_blank" rel="noopener noreferrer">
-                          [code]
-                        </a>
-                      </span>
-                    )}
+                <div key={pattern.id} className="border rounded p-3 bg-white">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="font-mono text-2xl">{pattern.label}</span>
+                    <span className="font-medium">{pattern.description}</span>
                     {pattern.isRecommended && (
-                      <span className="text-xs text-primary ml-2">🤖 Athena recommends</span>
+                      <Badge variant="secondary" className="text-xs">🤖 My preference</Badge>
                     )}
-                  </button>
+                  </div>
+                  
+                  {/* Show code example based on pattern */}
+                  <div className="bg-gray-900 text-gray-100 p-3 rounded text-sm font-mono mt-2">
+                    {pattern.id === 'pattern-a' && (
+                      <div>
+                        <div className="text-green-400">// Pattern A: Check flag then enqueue</div>
+                        <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
+                        <div className="ml-4">await enqueueInvoice(invoiceData);</div>
+                        <div>{`}`}</div>
+                      </div>
+                    )}
+                    {pattern.id === 'pattern-b' && (
+                      <div>
+                        <div className="text-green-400">// Pattern B: Check flag with logging</div>
+                        <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
+                        <div className="ml-4">await enqueueInvoice(invoiceData);</div>
+                        <div>{`}`} else {`{`}</div>
+                        <div className="ml-4">logger.info("async_invoice_dispatch disabled");</div>
+                        <div>{`}`}</div>
+                      </div>
+                    )}
+                    {pattern.id === 'pattern-c' && (
+                      <div>
+                        <div className="text-green-400">// Pattern C: Enhanced with metrics</div>
+                        <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
+                        <div className="ml-4">metrics.increment("invoice.async.enabled");</div>
+                        <div className="ml-4">await enqueueInvoice(invoiceData);</div>
+                        <div>{`}`} else {`{`}</div>
+                        <div className="ml-4">metrics.increment("invoice.async.disabled");</div>
+                        <div className="ml-4">logger.info("async_invoice_dispatch disabled");</div>
+                        <div>{`}`}</div>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Emoji reaction buttons */}
+                  <div className="mt-3 flex items-center gap-2">
+                    <button
+                      onClick={() => handlePatternSelect(pattern.id)}
+                      className={`text-2xl hover:scale-110 transition-transform ${selectedPattern === pattern.id ? 'bg-primary/10 rounded p-1' : 'hover:bg-muted/50 rounded p-1'}`}
+                    >
+                      {pattern.id === 'pattern-a' && '🅰️'}
+                      {pattern.id === 'pattern-b' && '🅱️'}
+                      {pattern.id === 'pattern-c' && '©️'}
+                    </button>
+                    <span className="text-xs text-muted-foreground">Click to vote for this pattern</span>
+                  </div>
                 </div>
               ))}
+            </div>
+            
+            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
+              <p className="text-sm text-yellow-800">
+                <strong>👆 {gap.expert.slackHandle}, which pattern should we standardize on?</strong>
+              </p>
+              <p className="text-xs text-yellow-700 mt-1">
+                Click the emoji above each pattern to indicate your choice
+              </p>
             </div>
           </div>
         </div>
@@ -124,11 +187,19 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
           timestamp="9:35 AM"
           isThread
         >
-          <div className="space-y-2">
-            <p>Pattern C is correct. Aligns with rollout policy + logs behavior.</p>
+          <div className="space-y-3">
+            <p>©️ <strong>Pattern C is the way to go.</strong></p>
+            <div className="bg-green-50 border border-green-200 rounded p-3">
+              <p className="text-green-800 text-sm font-medium mb-2">Why Pattern C:</p>
+              <div className="text-sm text-green-700 space-y-1">
+                <p>• ✅ Aligns with our observability rollout policy</p>
+                <p>• ✅ Metrics help us track adoption rates and make data-driven decisions</p>
+                <p>• ✅ Logging catches unexpected behavior during rollouts</p>
+                <p>• ✅ We can detect feature flag performance impact</p>
+              </div>
+            </div>
             <p className="text-sm text-muted-foreground">
-              "Always check the flag first, and log when disabled for observability. 
-              This helps us track feature adoption and debug issues."
+              The metrics are crucial - we've had 3 feature flags this quarter where we couldn't tell if low adoption was due to bugs or user behavior. With Pattern C, we'll have the data to make the right call.
             </p>
           </div>
         </SlackMessage>
