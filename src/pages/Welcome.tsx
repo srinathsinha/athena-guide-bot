@@ -37,20 +37,43 @@ export default function Welcome() {
             </h1>
           </div>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Experience how AI-powered knowledge management transforms your engineering workflow
+            Get to the "a-ha!" moment faster by leveraging experts to manage the knowledge graph from Slack
           </p>
         </div>
 
-        {/* Demo Overview */}
+        {/* Problems */}
         <Card className="max-w-4xl mx-auto mb-8">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-primary" />
-              Interactive Demo Experience
-            </CardTitle>
-            <CardDescription>
-              This demo simulates a real engineering team's interaction with Athena, an AI assistant that helps identify and resolve knowledge gaps in your codebase.
-            </CardDescription>
+            <CardTitle>Problems</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-muted/30">
+                <div className="flex-shrink-0 p-2 rounded-md bg-destructive/10 text-destructive">
+                  <MessageSquare className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-1">Close lower-confidence gaps quickly</h3>
+                  <p className="text-sm text-muted-foreground">Identifying and resolving knowledge gaps with low confidence requires rapid expert intervention</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-muted/30">
+                <div className="flex-shrink-0 p-2 rounded-md bg-destructive/10 text-destructive">
+                  <BarChart3 className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-1">Show immediate value</h3>
+                  <p className="text-sm text-muted-foreground">Demonstrating tangible benefits from AI-powered knowledge management systems</p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Proposed Solutions */}
+        <Card className="max-w-4xl mx-auto mb-8">
+          <CardHeader>
+            <CardTitle>Proposed Solutions</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-3 gap-6">
@@ -65,36 +88,6 @@ export default function Welcome() {
                   </div>
                 </div>
               ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* What You'll See */}
-        <Card className="max-w-4xl mx-auto mb-8">
-          <CardHeader>
-            <CardTitle>What You'll Experience</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-start gap-3">
-              <Badge variant="outline" className="min-w-fit">1</Badge>
-              <div>
-                <h4 className="font-medium">Daily Knowledge Digest</h4>
-                <p className="text-sm text-muted-foreground">See how Athena analyzes your codebase and identifies knowledge gaps with confidence scores</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Badge variant="outline" className="min-w-fit">2</Badge>
-              <div>
-                <h4 className="font-medium">Automated Pull Requests</h4>
-                <p className="text-sm text-muted-foreground">Watch Athena create PRs with multiple implementation options based on existing patterns</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Badge variant="outline" className="min-w-fit">3</Badge>
-              <div>
-                <h4 className="font-medium">Expert Consultation</h4>
-                <p className="text-sm text-muted-foreground">Experience Slack-integrated expert Q&A for complex architectural decisions</p>
-              </div>
             </div>
           </CardContent>
         </Card>
