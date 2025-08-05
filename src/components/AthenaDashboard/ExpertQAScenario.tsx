@@ -100,21 +100,15 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
         </div>
       </SlackMessage>
 
-      <SlackMessage
-        author={athenaBot}
-        timestamp="9:20 AM"
-        isThread
-      >
-        <div className="space-y-4">
-          <p>📞 Requesting expert input from <strong>{gap.expert.slackHandle}</strong></p>
-          <div className="text-sm text-muted-foreground ml-4">
-            <p>• Domain: Billing & Feature Flags</p>
-            <p>• Nominated by: {gap.nominatedBy.slackHandle}</p>
-            <p>• Response time: Usually &lt; 30min</p>
-          </div>
-          
-          
-          {showOptions && (
+      {showOptions && (
+        <SlackMessage
+          author={athenaBot}
+          timestamp="9:20 AM"
+          isThread
+        >
+          <div className="space-y-4">
+            <p>📞 Requesting expert input from <strong>{gap.expert.slackHandle}</strong></p>
+            
             <div className="space-y-4">
               <p className="font-medium">🔍 Found these implementation patterns in our codebase:</p>
               
@@ -184,9 +178,9 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
                 👆 {gap.expert.slackHandle}, which pattern should we standardize on? Click the emoji above each pattern to indicate your choice.
               </p>
             </div>
-          )}
-        </div>
-      </SlackMessage>
+          </div>
+        </SlackMessage>
+      )}
 
       {showExpertResponse && (
         <SlackMessage
