@@ -24,49 +24,41 @@ export function AthenaDigest({ digest, onViewThread }: AthenaDigestProps) {
         author={athenaBot}
         timestamp="9:00 AM"
       >
-        <div className="space-y-4">
+        <div className="space-y-3">
           <p>👋 Good morning, here's your daily update from Athena.</p>
           
-          <p>🧠 We found {digest.gaps.length} high-impact knowledge gaps to resolve today:</p>
+          <p>🧠 We found <strong>{digest.gaps.length} high-impact knowledge gaps</strong> to resolve today:</p>
           
-          <div className="space-y-3">
+          <div className="space-y-4 mt-4">
             {digest.gaps.map((gap, index) => (
-              <div key={gap.id} className="border-l-4 border-primary/20 pl-4">
-                <div className="space-y-1">
-                  <p className="font-medium">
-                    {index + 1}️⃣ {gap.title}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    • Confidence: {gap.confidence}%
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    • Action: {gap.action === 'auto-pr' ? 'Propose Auto-PR' : 'Ask Expert'}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    • Tagged Expert: {gap.expert.slackHandle} (nominated by {gap.nominatedBy.slackHandle})
-                  </p>
-                  <Button 
-                    variant="link" 
-                    size="sm" 
-                    className="p-0 h-auto text-xs"
+              <div key={gap.id} className="pl-4">
+                <p className="font-medium">
+                  <span className="text-lg">{index + 1}️⃣</span> <strong>{gap.title}</strong>
+                </p>
+                <div className="text-sm text-muted-foreground mt-1 space-y-0.5">
+                  <p>• Confidence: <strong>{gap.confidence}%</strong></p>
+                  <p>• Action: <span className="text-primary">{gap.action === 'auto-pr' ? 'Propose Auto-PR' : 'Ask Expert'}</span></p>
+                  <p>• Tagged Expert: <span className="text-blue-400">{gap.expert.slackHandle}</span> (nominated by <span className="text-blue-400">{gap.nominatedBy.slackHandle}</span>)</p>
+                  <button 
+                    className="text-blue-400 hover:underline text-sm"
                     onClick={() => onViewThread(gap.id)}
                   >
-                    → [View Thread]
-                  </Button>
+                    → View Thread
+                  </button>
                 </div>
               </div>
             ))}
           </div>
           
-          <div className="space-y-2">
-            <p>📈 Current Graph Score: {digest.overallScore}%</p>
+          <div className="mt-6 space-y-2">
+            <p>📈 <strong>Current Graph Score: {digest.overallScore}%</strong></p>
             <KnowledgeProgressBar score={digest.overallScore} />
-            <div className="flex gap-2 text-xs">
-              <Button variant="link" size="sm" className="p-0 h-auto">→ [View Coverage]</Button>
-              <Button variant="link" size="sm" className="p-0 h-auto">|</Button>
-              <Button variant="link" size="sm" className="p-0 h-auto">[Nominate Expert]</Button>
-              <Button variant="link" size="sm" className="p-0 h-auto">|</Button>
-              <Button variant="link" size="sm" className="p-0 h-auto">[Help Improve]</Button>
+            <div className="flex gap-1 text-sm">
+              <button className="text-blue-400 hover:underline">→ View Coverage</button>
+              <span className="text-muted-foreground">|</span>
+              <button className="text-blue-400 hover:underline">Nominate Expert</button>
+              <span className="text-muted-foreground">|</span>
+              <button className="text-blue-400 hover:underline">Help Improve</button>
             </div>
           </div>
         </div>
