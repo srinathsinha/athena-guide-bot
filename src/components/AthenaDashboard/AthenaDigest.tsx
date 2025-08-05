@@ -26,7 +26,7 @@ export function AthenaDigest({ digest, onViewThread, approvedGaps }: AthenaDiges
         timestamp="9:00 AM"
       >
         <div className="space-y-3">
-          <p>👋 Good morning, here's your daily update from Athena.</p>
+          <p>👋 Good morning, here's your daily update from Athena, your knowledge companion.</p>
           
           <p>🧠 We found <strong>{digest.gaps.length} high-impact knowledge gaps</strong> to resolve today:</p>
           
