@@ -2,14 +2,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
-import { Sparkles, Bot, GitPullRequest, MessageSquare, BarChart3, Clock, Award } from 'lucide-react';
+import { Sparkles, Bot, GitPullRequest, MessageSquare, BarChart3, Clock, Award, FileText } from 'lucide-react';
 
 export default function Welcome() {
   const navigate = useNavigate();
 
   const features = [
     {
-      icon: <BarChart3 className="h-5 w-5" />,
+      icon: <FileText className="h-5 w-5" />,
       title: "Daily Digest",
       description: "AI-powered knowledge gap detection and team insights"
     },
