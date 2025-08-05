@@ -47,12 +47,14 @@ export function AthenaDigest({ digest, onViewThread, approvedGaps }: AthenaDiges
                     {isApproved ? (
                       <p className="text-green-500 text-sm font-medium">✅ Merged and deployed</p>
                     ) : (
-                      <button 
-                        className="text-blue-400 hover:underline text-sm"
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
                         onClick={() => onViewThread(gap.id)}
+                        className="text-xs"
                       >
-                        → View Thread
-                      </button>
+                        View Thread
+                      </Button>
                     )}
                   </div>
                 </div>
