@@ -146,12 +146,17 @@ export const mockDailyDigest: AthenaDailyDigest = {
   graphAreas: mockGraphAreas
 };
 
-export const getUpdatedDigestAfterApproval = (approvedGapId: string): AthenaDailyDigest => ({
-  ...mockDailyDigest,
-  overallScore: 77, // Increased by 3%
-  gaps: mockDailyDigest.gaps.map(gap => 
-    gap.id === approvedGapId 
-      ? { ...gap, status: 'approved' as const }
-      : gap
-  )
-});
+export const getUpdatedDigestAfterApproval = (approvedGapId: string, currentlyApprovedIds: Set<string> = new Set()): AthenaDailyDigest => {
+  const newApprovedIds = new Set([...currentlyApprovedIds, approvedGapId]);
+  const scoreIncrease = newApprovedIds.size * 3; // 3% per approved gap
+  
+  return {
+    ...mockDailyDigest,
+    overallScore: 74 + scoreIncrease, // Base score + cumulative increases
+    gaps: mockDailyDigest.gaps.map(gap => 
+      newApprovedIds.has(gap.id)
+        ? { ...gap, status: 'approved' as const }
+        : gap
+    )
+  };
+};
