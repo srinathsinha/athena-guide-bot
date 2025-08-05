@@ -89,14 +89,32 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
             </div>
           )}
           
-          <PatternSelector
-            patterns={gap.patterns}
-            selectedPattern={selectedPattern}
-            onSelect={handlePatternSelect}
-            showRecommendation={true}
-          />
-          
-          <p className="text-sm font-medium">{gap.expert.slackHandle}, please hit A, B, or C to indicate your choice 👇</p>
+          <div className="space-y-2">
+            <p className="font-medium">📍 Summary of existing patterns found (choose the respective emoji to indicate your choice):</p>
+            <div className="space-y-1">
+              {gap.patterns.map((pattern) => (
+                <div key={pattern.id}>
+                  <button
+                    onClick={() => handlePatternSelect(pattern.id)}
+                    className={`text-left w-full p-2 rounded hover:bg-muted/50 ${selectedPattern === pattern.id ? 'bg-primary/10' : ''}`}
+                  >
+                    <span className="font-mono text-lg mr-2">{pattern.label}</span>
+                    <span className="text-sm">{pattern.description}</span>
+                    {pattern.repoLink && (
+                      <span className="text-blue-500 hover:underline text-xs ml-2">
+                        <a href={pattern.repoLink} target="_blank" rel="noopener noreferrer">
+                          [code]
+                        </a>
+                      </span>
+                    )}
+                    {pattern.isRecommended && (
+                      <span className="text-xs text-primary ml-2">🤖 Athena recommends</span>
+                    )}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </SlackMessage>
 
