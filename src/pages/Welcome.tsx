@@ -63,7 +63,7 @@ export default function Welcome() {
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Experts can't assess slope of hill-climb to quality</h3>
-                  <p className="text-sm text-muted-foreground">No visibility into system performance during critical early stages</p>
+                  <p className="text-sm text-muted-foreground">Experts need a visual depiction of where to plug gaps in Resolve's understanding of the code base</p>
                 </div>
               </div>
             </div>
