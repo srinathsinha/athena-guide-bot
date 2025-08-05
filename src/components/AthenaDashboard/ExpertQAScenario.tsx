@@ -18,6 +18,7 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
   const [selectedPattern, setSelectedPattern] = useState<string>();
   const [showExpertResponse, setShowExpertResponse] = useState(false);
   const [showUpdate, setShowUpdate] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
 
   const athenaBot = {
     name: 'Athena',
@@ -86,8 +87,15 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
 
           <div className="bg-blue-50 border border-blue-200 rounded p-3">
             <p className="text-blue-800 text-sm">
-              🤖 <strong>My analysis:</strong> We should standardize on Pattern C (enhanced with metrics + logging) to prevent future incidents and improve observability. Options in :thread:
+              🤖 <strong>My analysis:</strong> We should standardize on Pattern C (enhanced with metrics + logging) to prevent future incidents and improve observability.
             </p>
+            <button 
+              onClick={() => setShowOptions(!showOptions)}
+              className="text-blue-800 text-sm mt-2 hover:underline flex items-center gap-1"
+            >
+              <span className={`transform transition-transform ${showOptions ? 'rotate-90' : ''}`}>▶</span>
+              Options in :thread:
+            </button>
           </div>
         </div>
       </SlackMessage>
@@ -105,75 +113,78 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
             <p>• Response time: Usually &lt; 30min</p>
           </div>
           
-          <div className="space-y-4">
-            <p className="font-medium">🔍 Found these implementation patterns in our codebase:</p>
-            
-            <div className="space-y-3 pl-4">
-              <div className="flex items-start gap-3">
-                <button
-                  onClick={() => handlePatternSelect('pattern-a')}
-                  className={`text-2xl hover:scale-110 transition-transform ${selectedPattern === 'pattern-a' ? 'bg-primary/10 rounded p-1' : 'hover:bg-muted/50 rounded p-1'}`}
-                >
-                  🅐️
-                </button>
-                <div className="flex-1">
-                  <div className="font-medium">Simple flag check</div>
-                  <div className="bg-gray-900 text-gray-100 p-2 rounded text-xs font-mono mt-1">
-                    <div className="text-green-400">// Pattern A: Check flag then enqueue</div>
-                    <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
-                    <div className="ml-4">await enqueueInvoice(invoiceData);</div>
-                    <div>{`}`}</div>
+          
+          {showOptions && (
+            <div className="space-y-4">
+              <p className="font-medium">🔍 Found these implementation patterns in our codebase:</p>
+              
+              <div className="space-y-3 pl-4">
+                <div className="flex items-start gap-3">
+                  <button
+                    onClick={() => handlePatternSelect('pattern-a')}
+                    className={`text-2xl hover:scale-110 transition-transform ${selectedPattern === 'pattern-a' ? 'bg-primary/10 rounded p-1' : 'hover:bg-muted/50 rounded p-1'}`}
+                  >
+                    🅐️
+                  </button>
+                  <div className="flex-1">
+                    <div className="font-medium">Simple flag check</div>
+                    <div className="bg-gray-900 text-gray-100 p-2 rounded text-xs font-mono mt-1">
+                      <div className="text-green-400">// Pattern A: Check flag then enqueue</div>
+                      <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
+                      <div className="ml-4">await enqueueInvoice(invoiceData);</div>
+                      <div>{`}`}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="flex items-start gap-3">
-                <button
-                  onClick={() => handlePatternSelect('pattern-b')}
-                  className={`text-2xl hover:scale-110 transition-transform ${selectedPattern === 'pattern-b' ? 'bg-primary/10 rounded p-1' : 'hover:bg-muted/50 rounded p-1'}`}
-                >
-                  🅑️
-                </button>
-                <div className="flex-1">
-                  <div className="font-medium">Flag check with logging</div>
-                  <div className="bg-gray-900 text-gray-100 p-2 rounded text-xs font-mono mt-1">
-                    <div className="text-green-400">// Pattern B: Check flag with logging</div>
-                    <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
-                    <div className="ml-4">await enqueueInvoice(invoiceData);</div>
-                    <div>{`}`} else {`{`}</div>
-                    <div className="ml-4">logger.info("async_invoice_dispatch disabled");</div>
-                    <div>{`}`}</div>
+                <div className="flex items-start gap-3">
+                  <button
+                    onClick={() => handlePatternSelect('pattern-b')}
+                    className={`text-2xl hover:scale-110 transition-transform ${selectedPattern === 'pattern-b' ? 'bg-primary/10 rounded p-1' : 'hover:bg-muted/50 rounded p-1'}`}
+                  >
+                    🅑️
+                  </button>
+                  <div className="flex-1">
+                    <div className="font-medium">Flag check with logging</div>
+                    <div className="bg-gray-900 text-gray-100 p-2 rounded text-xs font-mono mt-1">
+                      <div className="text-green-400">// Pattern B: Check flag with logging</div>
+                      <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
+                      <div className="ml-4">await enqueueInvoice(invoiceData);</div>
+                      <div>{`}`} else {`{`}</div>
+                      <div className="ml-4">logger.info("async_invoice_dispatch disabled");</div>
+                      <div>{`}`}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="flex items-start gap-3">
-                <button
-                  onClick={() => handlePatternSelect('pattern-c')}
-                  className={`text-2xl hover:scale-110 transition-transform ${selectedPattern === 'pattern-c' ? 'bg-primary/10 rounded p-1' : 'hover:bg-muted/50 rounded p-1'}`}
-                >
-                  🅲️
-                </button>
-                <div className="flex-1">
-                  <div className="font-medium">Enhanced with metrics **Recommended**</div>
-                  <div className="bg-gray-900 text-gray-100 p-2 rounded text-xs font-mono mt-1">
-                    <div className="text-green-400">// Pattern C: Enhanced with metrics</div>
-                    <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
-                    <div className="ml-4">metrics.increment("invoice.async.enabled");</div>
-                    <div className="ml-4">await enqueueInvoice(invoiceData);</div>
-                    <div>{`}`} else {`{`}</div>
-                    <div className="ml-4">metrics.increment("invoice.async.disabled");</div>
-                    <div className="ml-4">logger.info("async_invoice_dispatch disabled");</div>
-                    <div>{`}`}</div>
+                <div className="flex items-start gap-3">
+                  <button
+                    onClick={() => handlePatternSelect('pattern-c')}
+                    className={`text-2xl hover:scale-110 transition-transform ${selectedPattern === 'pattern-c' ? 'bg-primary/10 rounded p-1' : 'hover:bg-muted/50 rounded p-1'}`}
+                  >
+                    🅲️
+                  </button>
+                  <div className="flex-1">
+                    <div className="font-medium">Enhanced with metrics **Recommended**</div>
+                    <div className="bg-gray-900 text-gray-100 p-2 rounded text-xs font-mono mt-1">
+                      <div className="text-green-400">// Pattern C: Enhanced with metrics</div>
+                      <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
+                      <div className="ml-4">metrics.increment("invoice.async.enabled");</div>
+                      <div className="ml-4">await enqueueInvoice(invoiceData);</div>
+                      <div>{`}`} else {`{`}</div>
+                      <div className="ml-4">metrics.increment("invoice.async.disabled");</div>
+                      <div className="ml-4">logger.info("async_invoice_dispatch disabled");</div>
+                      <div>{`}`}</div>
+                    </div>
                   </div>
                 </div>
               </div>
+              
+              <p className="mt-4">
+                👆 {gap.expert.slackHandle}, which pattern should we standardize on? Click the emoji above each pattern to indicate your choice.
+              </p>
             </div>
-            
-            <p className="mt-4">
-              👆 {gap.expert.slackHandle}, which pattern should we standardize on? Click the emoji above each pattern to indicate your choice.
-            </p>
-          </div>
+          )}
         </div>
       </SlackMessage>
 
