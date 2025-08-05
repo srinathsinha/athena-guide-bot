@@ -155,7 +155,7 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
                   ©️
                 </button>
                 <div className="flex-1">
-                  <div className="font-medium">Enhanced with metrics <Badge variant="secondary" className="text-xs ml-2">**Recommended**</Badge></div>
+                  <div className="font-medium">Enhanced with metrics **Recommended**</div>
                   <div className="bg-gray-900 text-gray-100 p-2 rounded text-xs font-mono mt-1">
                     <div className="text-green-400">// Pattern C: Enhanced with metrics</div>
                     <div>if (isFeatureEnabled("async_invoice_dispatch")) {`{`}</div>
