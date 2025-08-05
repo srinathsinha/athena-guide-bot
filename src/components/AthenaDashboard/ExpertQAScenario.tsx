@@ -1,4 +1,4 @@
-import athenaAvatar from '@/assets/athena-bot-avatar.jpg';
+import athenaAvatar from '@/assets/athena-goddess-avatar.webp';
 import { useState } from 'react';
 import { SlackMessage } from '@/components/SlackUI/SlackMessage';
 import { SlackThread } from '@/components/SlackUI/SlackThread';
