@@ -63,12 +63,16 @@ export function AthenaDigest({ digest, onViewThread, approvedGaps }: AthenaDiges
           <div className="mt-6 space-y-2">
             <p>📈 <strong>Current Graph Score: {digest.overallScore}%</strong></p>
             <KnowledgeProgressBar score={digest.overallScore} />
-            <div className="flex gap-1 text-sm">
-              <button className="text-blue-400 hover:underline">→ View Coverage</button>
-              <span className="text-muted-foreground">|</span>
-              <button className="text-blue-400 hover:underline">Nominate Expert</button>
-              <span className="text-muted-foreground">|</span>
-              <button className="text-blue-400 hover:underline">Help Improve</button>
+            <div className="flex gap-2 flex-wrap">
+              <Button variant="outline" size="sm" className="text-xs">
+                View Coverage
+              </Button>
+              <Button variant="outline" size="sm" className="text-xs">
+                Nominate Expert
+              </Button>
+              <Button variant="outline" size="sm" className="text-xs">
+                Help Improve
+              </Button>
             </div>
           </div>
         </div>
