@@ -29,7 +29,6 @@ export function AutoPRScenario({ gap, onApprove, onReject }: AutoPRScenarioProps
         actions={
           <div className="flex gap-2">
             <Button size="sm" onClick={onApprove}>
-              <GitPullRequest className="h-4 w-4 mr-1" />
               View Proposed PR
             </Button>
             <Button variant="outline" size="sm" onClick={onApprove}>
@@ -108,9 +107,9 @@ export function AutoPRScenario({ gap, onApprove, onReject }: AutoPRScenarioProps
                       <div className="text-xs text-muted-foreground space-y-1 mb-2">
                         <div className="flex items-center gap-2">
                           <GitCommit className="h-3 w-3" />
-                          <a href={pattern.repoLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                          <span className="text-blue-400 hover:underline cursor-pointer">
                             {pattern.commitInfo.sha}
-                          </a>
+                          </span>
                           <span>•</span>
                           <span>{pattern.commitInfo.message}</span>
                         </div>
@@ -179,7 +178,6 @@ export function AutoPRScenario({ gap, onApprove, onReject }: AutoPRScenarioProps
             </div>
             
             <Button variant="outline" size="sm">
-              <ExternalLink className="h-3 w-3 mr-1" />
               Open in GitHub
             </Button>
           </CardContent>
