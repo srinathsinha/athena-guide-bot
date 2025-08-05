@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import athenaAvatar from '@/assets/athena-goddess-avatar.webp';
 import { SlackMessage } from '@/components/SlackUI/SlackMessage';
 import { SlackThread } from '@/components/SlackUI/SlackThread';
@@ -13,6 +14,7 @@ interface AthenaDigestProps {
 }
 
 export function AthenaDigest({ digest, onViewThread, approvedGaps }: AthenaDigestProps) {
+  const [visibleMessages, setVisibleMessages] = useState<number>(0);
   const athenaBot = {
     name: 'Athena',
     avatar: athenaAvatar,
@@ -20,12 +22,28 @@ export function AthenaDigest({ digest, onViewThread, approvedGaps }: AthenaDiges
     isBot: true
   };
 
+  useEffect(() => {
+    // Show first message immediately
+    setVisibleMessages(1);
+    
+    // Show subsequent messages with 1 second delays
+    const timer1 = setTimeout(() => setVisibleMessages(2), 1000);
+    const timer2 = setTimeout(() => setVisibleMessages(3), 2000);
+    
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
+  }, []);
+
   return (
     <SlackThread title="resolve-ai-feedback">
-      <SlackMessage
-        author={athenaBot}
-        timestamp="9:00 AM"
-      >
+      {visibleMessages >= 1 && (
+        <div className="animate-fade-in">
+          <SlackMessage
+            author={athenaBot}
+            timestamp="9:00 AM"
+          >
         <div className="space-y-3">
           <p>👋 Good morning, here's your daily update from Athena, your knowledge companion.</p>
           
@@ -36,16 +54,18 @@ export function AthenaDigest({ digest, onViewThread, approvedGaps }: AthenaDiges
           
           <p>🧠 We found <strong>{digest.gaps.length} high-impact knowledge gaps</strong> to resolve today:</p>
         </div>
-      </SlackMessage>
+          </SlackMessage>
+        </div>
+      )}
 
       {digest.gaps.map((gap, index) => {
         const isApproved = approvedGaps?.has(gap.id);
-        return (
-          <SlackMessage
-            key={gap.id}
-            author={athenaBot}
-            timestamp={`9:0${index + 1} AM`}
-          >
+        return visibleMessages >= (index + 2) ? (
+          <div key={gap.id} className="animate-fade-in">
+            <SlackMessage
+              author={athenaBot}
+              timestamp={`9:0${index + 1} AM`}
+            >
             <div className="space-y-3">
               <p className="font-medium flex items-center gap-2">
                 <span className="text-lg">{index + 1}️⃣</span> 
@@ -70,8 +90,9 @@ export function AthenaDigest({ digest, onViewThread, approvedGaps }: AthenaDiges
                 )}
               </div>
             </div>
-          </SlackMessage>
-        );
+            </SlackMessage>
+          </div>
+        ) : null;
       })}
     </SlackThread>
   );
