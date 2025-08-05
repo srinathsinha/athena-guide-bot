@@ -54,7 +54,7 @@ export default function Welcome() {
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Time to value isn't consistently low</h3>
-                  <p className="text-sm text-muted-foreground">New teams struggle to see quick wins during onboarding</p>
+                  <p className="text-sm text-muted-foreground">New teams sometimes struggle to see quick wins during onboarding</p>
                 </div>
               </div>
               <div className="flex items-start gap-3 p-4 rounded-lg bg-muted/30">
