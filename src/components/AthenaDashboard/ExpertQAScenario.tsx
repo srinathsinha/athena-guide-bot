@@ -1,3 +1,4 @@
+import athenaAvatar from '@/assets/athena-bot-avatar.jpg';
 import { useState } from 'react';
 import { SlackMessage } from '@/components/SlackUI/SlackMessage';
 import { SlackThread } from '@/components/SlackUI/SlackThread';
@@ -22,7 +23,7 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
 
   const athenaBot = {
     name: 'Athena',
-    avatar: '/placeholder.svg',
+    avatar: athenaAvatar,
     handle: '@athena',
     isBot: true
   };

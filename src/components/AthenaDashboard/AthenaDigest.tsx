@@ -1,3 +1,4 @@
+import athenaAvatar from '@/assets/athena-bot-avatar.jpg';
 import { SlackMessage } from '@/components/SlackUI/SlackMessage';
 import { SlackThread } from '@/components/SlackUI/SlackThread';
 import { KnowledgeProgressBar } from './KnowledgeProgressBar';
@@ -14,7 +15,7 @@ interface AthenaDigestProps {
 export function AthenaDigest({ digest, onViewThread, approvedGaps }: AthenaDigestProps) {
   const athenaBot = {
     name: 'Athena',
-    avatar: '/placeholder.svg',
+    avatar: athenaAvatar,
     handle: '@athena',
     isBot: true
   };
