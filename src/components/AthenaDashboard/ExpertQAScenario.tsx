@@ -114,7 +114,7 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
                   onClick={() => handlePatternSelect('pattern-a')}
                   className={`text-2xl hover:scale-110 transition-transform ${selectedPattern === 'pattern-a' ? 'bg-primary/10 rounded p-1' : 'hover:bg-muted/50 rounded p-1'}`}
                 >
-                  🅰️
+                  🅐️
                 </button>
                 <div className="flex-1">
                   <div className="font-medium">Simple flag check</div>
@@ -132,7 +132,7 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
                   onClick={() => handlePatternSelect('pattern-b')}
                   className={`text-2xl hover:scale-110 transition-transform ${selectedPattern === 'pattern-b' ? 'bg-primary/10 rounded p-1' : 'hover:bg-muted/50 rounded p-1'}`}
                 >
-                  🅱️
+                  🅑️
                 </button>
                 <div className="flex-1">
                   <div className="font-medium">Flag check with logging</div>
