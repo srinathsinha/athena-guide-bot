@@ -94,7 +94,7 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
               className="text-blue-800 text-sm mt-2 hover:underline flex items-center gap-1"
             >
               <span className={`transform transition-transform ${showOptions ? 'rotate-90' : ''}`}>▶</span>
-              Options in :thread:
+              Options in 🧵
             </button>
           </div>
         </div>
