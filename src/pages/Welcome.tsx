@@ -11,17 +11,17 @@ export default function Welcome() {
     {
       icon: <FileText className="h-5 w-5" />,
       title: "Daily Digest",
-      description: "AI-powered knowledge gap detection and team insights"
+      description: "Increase expertise coverage by engaging proactively with experts daily"
     },
     {
       icon: <GitPullRequest className="h-5 w-5" />,
       title: "Auto-PR Scenarios", 
-      description: "Automated code improvements based on pattern analysis"
+      description: "Submit PRs on low-risk tech debt from Day 1!"
     },
     {
       icon: <MessageSquare className="h-5 w-5" />,
-      title: "Expert Q&A Flow",
-      description: "Slack-integrated expert consultation for complex decisions"
+      title: "Expert Q&A",
+      description: "Slack-native interface for multiple discussions per day"
     }
   ];
 
