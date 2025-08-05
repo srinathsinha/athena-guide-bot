@@ -132,7 +132,7 @@ const Index = () => {
 
   // Get current digest with approval status
   const currentDigest = approvedGaps.size > 0 
-    ? getUpdatedDigestAfterApproval(Array.from(approvedGaps)[0])
+    ? getUpdatedDigestAfterApproval(Array.from(approvedGaps)[0], approvedGaps)
     : mockDailyDigest;
 
   return (
