@@ -23,10 +23,15 @@ export function AthenaDigest({ digest, onViewThread, approvedGaps }: AthenaDiges
   };
 
   useEffect(() => {
-    // Show first message immediately
+    // If user is returning from scenarios (has approved gaps), show all messages immediately
+    if (approvedGaps && approvedGaps.size > 0) {
+      setVisibleMessages(3);
+      return;
+    }
+    
+    // Otherwise, show messages with delays for first-time experience
     setVisibleMessages(1);
     
-    // Show subsequent messages with 1 second delays
     const timer1 = setTimeout(() => setVisibleMessages(2), 1000);
     const timer2 = setTimeout(() => setVisibleMessages(3), 2000);
     
@@ -34,7 +39,7 @@ export function AthenaDigest({ digest, onViewThread, approvedGaps }: AthenaDiges
       clearTimeout(timer1);
       clearTimeout(timer2);
     };
-  }, []);
+  }, [approvedGaps]);
 
   return (
     <SlackThread title="resolve-ai-feedback">
