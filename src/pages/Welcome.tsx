@@ -53,8 +53,8 @@ export default function Welcome() {
                   <MessageSquare className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1">Close lower-confidence gaps quickly</h3>
-                  <p className="text-sm text-muted-foreground">Identifying and resolving knowledge gaps with low confidence requires rapid expert intervention</p>
+                  <h3 className="font-semibold mb-1">Time to value isn't consistently low</h3>
+                  <p className="text-sm text-muted-foreground">New team members struggle to see immediate benefits and quick wins from AI-powered tools during onboarding</p>
                 </div>
               </div>
               <div className="flex items-start gap-3 p-4 rounded-lg bg-muted/30">
@@ -62,8 +62,8 @@ export default function Welcome() {
                   <BarChart3 className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1">Show immediate value</h3>
-                  <p className="text-sm text-muted-foreground">Demonstrating tangible benefits from AI-powered knowledge management systems</p>
+                  <h3 className="font-semibold mb-1">Experts can't assess how good Resolve is during/right after onboarding</h3>
+                  <p className="text-sm text-muted-foreground">Domain experts lack visibility into system performance and effectiveness during the critical onboarding period</p>
                 </div>
               </div>
             </div>
