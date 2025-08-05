@@ -116,3 +116,13 @@ export const mockDailyDigest: AthenaDailyDigest = {
   overallScore: 74,
   graphAreas: mockGraphAreas
 };
+
+export const getUpdatedDigestAfterApproval = (approvedGapId: string): AthenaDailyDigest => ({
+  ...mockDailyDigest,
+  overallScore: 77, // Increased by 3%
+  gaps: mockDailyDigest.gaps.map(gap => 
+    gap.id === approvedGapId 
+      ? { ...gap, status: 'approved' as const }
+      : gap
+  )
+});

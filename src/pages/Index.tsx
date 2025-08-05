@@ -5,13 +5,16 @@ import { AutoPRScenario } from "@/components/AthenaDashboard/AutoPRScenario";
 import { ExpertQAScenario } from "@/components/AthenaDashboard/ExpertQAScenario";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { mockDailyDigest, mockKnowledgeGaps } from "@/data/mockData";
+import { mockDailyDigest, mockKnowledgeGaps, getUpdatedDigestAfterApproval } from "@/data/mockData";
 import { Scenario } from "@/types/athena";
+import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
+  const { toast } = useToast();
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentScenario, setCurrentScenario] = useState<Scenario>('digest');
   const [selectedGapId, setSelectedGapId] = useState<string>();
+  const [approvedGaps, setApprovedGaps] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const scenario = searchParams.get('scenario') as Scenario;
@@ -46,14 +49,35 @@ const Index = () => {
   const selectedGap = mockKnowledgeGaps.find(g => g.id === selectedGapId);
 
   const handleApprove = () => {
-    // Demo action - could show success toast
-    console.log('PR Approved');
+    if (selectedGapId) {
+      // Show merge success
+      toast({
+        title: "✅ PR Merged Successfully",
+        description: "Retry logic standardized and knowledge graph updated!",
+      });
+
+      // Add to approved gaps
+      setApprovedGaps(prev => new Set([...prev, selectedGapId]));
+
+      // Navigate back to digest after a brief delay
+      setTimeout(() => {
+        handleScenarioChange('digest');
+      }, 1500);
+    }
   };
 
   const handleReject = () => {
-    // Demo action - could show rejection dialog
-    console.log('PR Rejected');
+    toast({
+      title: "PR Rejected",
+      description: "The proposed changes will not be merged.",
+      variant: "destructive"
+    });
   };
+
+  // Get current digest with approval status
+  const currentDigest = approvedGaps.size > 0 
+    ? getUpdatedDigestAfterApproval(Array.from(approvedGaps)[0])
+    : mockDailyDigest;
 
   return (
     <div className="min-h-screen bg-background">
@@ -113,8 +137,9 @@ const Index = () => {
           {/* Content based on scenario */}
           {currentScenario === 'digest' && (
             <AthenaDigest 
-              digest={mockDailyDigest}
+              digest={currentDigest}
               onViewThread={handleViewThread}
+              approvedGaps={approvedGaps}
             />
           )}
 

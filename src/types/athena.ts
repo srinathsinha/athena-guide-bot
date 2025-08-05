@@ -15,6 +15,7 @@ export interface KnowledgeGap {
   expert: Expert;
   nominatedBy: Expert;
   incident?: string;
+  status?: 'pending' | 'approved' | 'rejected';
   patterns: {
     id: string;
     label: string;

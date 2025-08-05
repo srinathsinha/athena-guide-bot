@@ -8,9 +8,10 @@ import { AthenaDailyDigest } from '@/types/athena';
 interface AthenaDigestProps {
   digest: AthenaDailyDigest;
   onViewThread: (gapId: string) => void;
+  approvedGaps?: Set<string>;
 }
 
-export function AthenaDigest({ digest, onViewThread }: AthenaDigestProps) {
+export function AthenaDigest({ digest, onViewThread, approvedGaps }: AthenaDigestProps) {
   const athenaBot = {
     name: 'Athena',
     avatar: '/placeholder.svg',
@@ -30,24 +31,33 @@ export function AthenaDigest({ digest, onViewThread }: AthenaDigestProps) {
           <p>🧠 We found <strong>{digest.gaps.length} high-impact knowledge gaps</strong> to resolve today:</p>
           
           <div className="space-y-4 mt-4">
-            {digest.gaps.map((gap, index) => (
-              <div key={gap.id} className="pl-4">
-                <p className="font-medium">
-                  <span className="text-lg">{index + 1}️⃣</span> <strong>{gap.title}</strong>
-                </p>
-                <div className="text-sm text-muted-foreground mt-1 space-y-0.5">
-                  <p>• Confidence: <strong>{gap.confidence}%</strong></p>
-                  <p>• Action: <span className="text-primary">{gap.action === 'auto-pr' ? 'Propose Auto-PR' : 'Ask Expert'}</span></p>
-                  <p>• Tagged Expert: <span className="text-blue-400">{gap.expert.slackHandle}</span> (nominated by <span className="text-blue-400">{gap.nominatedBy.slackHandle}</span>)</p>
-                  <button 
-                    className="text-blue-400 hover:underline text-sm"
-                    onClick={() => onViewThread(gap.id)}
-                  >
-                    → View Thread
-                  </button>
+            {digest.gaps.map((gap, index) => {
+              const isApproved = approvedGaps?.has(gap.id);
+              return (
+                <div key={gap.id} className="pl-4">
+                  <p className="font-medium flex items-center gap-2">
+                    <span className="text-lg">{index + 1}️⃣</span> 
+                    <strong>{gap.title}</strong>
+                    {isApproved && <span className="text-green-500">✅</span>}
+                  </p>
+                  <div className="text-sm text-muted-foreground mt-1 space-y-0.5">
+                    <p>• Confidence: <strong>{gap.confidence}%</strong></p>
+                    <p>• Action: <span className="text-primary">{gap.action === 'auto-pr' ? 'Propose Auto-PR' : 'Ask Expert'}</span></p>
+                    <p>• Tagged Expert: <span className="text-blue-400">{gap.expert.slackHandle}</span> (nominated by <span className="text-blue-400">{gap.nominatedBy.slackHandle}</span>)</p>
+                    {isApproved ? (
+                      <p className="text-green-500 text-sm font-medium">✅ Merged and deployed</p>
+                    ) : (
+                      <button 
+                        className="text-blue-400 hover:underline text-sm"
+                        onClick={() => onViewThread(gap.id)}
+                      >
+                        → View Thread
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           
           <div className="mt-6 space-y-2">
