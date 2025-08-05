@@ -72,25 +72,6 @@ export function AthenaDigest({ digest, onViewThread, approvedGaps }: AthenaDiges
           </SlackMessage>
         );
       })}
-
-      <SlackMessage
-        author={athenaBot}
-        timestamp="9:03 AM"
-      >
-        <div className="space-y-3">
-          <div className="flex gap-2 flex-wrap">
-            <Button variant="outline" size="sm" className="text-xs">
-              View Coverage
-            </Button>
-            <Button variant="outline" size="sm" className="text-xs">
-              Nominate Expert
-            </Button>
-            <Button variant="outline" size="sm" className="text-xs">
-              Help Improve
-            </Button>
-          </div>
-        </div>
-      </SlackMessage>
     </SlackThread>
   );
 }
