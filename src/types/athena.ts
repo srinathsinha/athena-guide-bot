@@ -24,6 +24,12 @@ export interface KnowledgeGap {
     description: string;
     isRecommended: boolean;
     repoLink?: string;
+    commitInfo?: {
+      sha: string;
+      message: string;
+      author: string;
+      date: string;
+    };
   }[];
 }
 

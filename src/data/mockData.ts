@@ -39,19 +39,40 @@ export const mockKnowledgeGaps: KnowledgeGap[] = [
         id: 'no-retry',
         label: '🅰️',
         description: 'No retry',
-        isRecommended: false
+        isRecommended: false,
+        repoLink: 'https://github.com/company/payments-core/blob/a1b2c3d/src/stripe-legacy.ts#L45',
+        commitInfo: {
+          sha: 'a1b2c3d',
+          message: 'Initial stripe integration',
+          author: 'john-dev',
+          date: '2024-01-15'
+        }
       },
       {
         id: 'manual-retry',
         label: '🅱️',
         description: 'Manual loop with fixed delay',
-        isRecommended: false
+        isRecommended: false,
+        repoLink: 'https://github.com/company/payments-core/blob/f4e5d6c/src/stripe-manual.ts#L52',
+        commitInfo: {
+          sha: 'f4e5d6c',
+          message: 'Add basic retry to stripe calls',
+          author: 'sarah-dev',
+          date: '2024-02-03'
+        }
       },
       {
         id: 'safe-retry',
         label: '🆎',
         description: 'Uses resolveSafeRetry() with exponential backoff and logging',
-        isRecommended: true
+        isRecommended: true,
+        repoLink: 'https://github.com/company/payments-core/blob/g7h8i9j/src/stripe-safe.ts#L31',
+        commitInfo: {
+          sha: 'g7h8i9j',
+          message: 'Implement safe retry pattern with exponential backoff',
+          author: 'alice-chen',
+          date: '2024-03-12'
+        }
       }
     ]
   },

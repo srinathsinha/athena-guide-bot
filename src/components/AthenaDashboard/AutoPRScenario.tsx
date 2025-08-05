@@ -3,8 +3,9 @@ import { SlackThread } from '@/components/SlackUI/SlackThread';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import { KnowledgeGap } from '@/types/athena';
-import { GitPullRequest, ExternalLink } from 'lucide-react';
+import { GitPullRequest, ExternalLink, GitCommit, User, Calendar } from 'lucide-react';
 
 interface AutoPRScenarioProps {
   gap: KnowledgeGap;
@@ -81,13 +82,84 @@ export function AutoPRScenario({ gap, onApprove, onReject }: AutoPRScenarioProps
               GitHub PR Preview
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-4">
             <div>
               <p className="font-medium text-sm">Title:</p>
               <p className="text-sm font-mono bg-muted p-2 rounded">
                 [resolve-ai] Standardize Retry Logic in stripe.chargeCustomer()
               </p>
             </div>
+
+            {/* Implementation Comparison */}
+            <div>
+              <p className="font-medium text-sm mb-3">Implementation Changes:</p>
+              
+              <div className="space-y-4">
+                {gap.patterns.map((pattern, index) => (
+                  <div key={pattern.id} className="border rounded-lg p-3">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="font-mono font-medium">{pattern.label}</span>
+                      <span className="text-sm">{pattern.description}</span>
+                      {pattern.isRecommended && <Badge variant="secondary" className="text-xs">Target</Badge>}
+                      {!pattern.isRecommended && <Badge variant="outline" className="text-xs">To be updated</Badge>}
+                    </div>
+                    
+                    {pattern.commitInfo && (
+                      <div className="text-xs text-muted-foreground space-y-1 mb-2">
+                        <div className="flex items-center gap-2">
+                          <GitCommit className="h-3 w-3" />
+                          <a href={pattern.repoLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                            {pattern.commitInfo.sha}
+                          </a>
+                          <span>•</span>
+                          <span>{pattern.commitInfo.message}</span>
+                        </div>
+                        <div className="flex items-center gap-2 ml-5">
+                          <User className="h-3 w-3" />
+                          <span>{pattern.commitInfo.author}</span>
+                          <span>•</span>
+                          <Calendar className="h-3 w-3" />
+                          <span>{pattern.commitInfo.date}</span>
+                        </div>
+                      </div>
+                    )}
+                    
+                    <div className="text-xs font-mono bg-muted/50 p-2 rounded">
+                      {pattern.id === 'no-retry' && (
+                        <div>
+                          <div className="text-red-600 mb-1">- await stripe.charges.create(params);</div>
+                          <div className="text-green-600">+ await resolveSafeRetry(() {'>'} stripe.charges.create(params), {'{'}</div>
+                          <div className="text-green-600">+   maxRetries: 3,</div>
+                          <div className="text-green-600">+   exponentialBackoff: true,</div>
+                          <div className="text-green-600">+   onError: (err) {'>'} logger.error('stripe_charge_failed', err)</div>
+                          <div className="text-green-600">+ {'}'});</div>
+                        </div>
+                      )}
+                      {pattern.id === 'manual-retry' && (
+                        <div>
+                          <div className="text-red-600 mb-1">- for (let i = 0; i {'<'} 3; i++) {'{'}</div>
+                          <div className="text-red-600">-   try {'{'} return await stripe.charges.create(params); {'}'}</div>
+                          <div className="text-red-600">-   catch (e) {'{'} await sleep(1000); {'}'}</div>
+                          <div className="text-red-600">- {'}'}</div>
+                          <div className="text-green-600">+ await resolveSafeRetry(() {'>'} stripe.charges.create(params), {'{'}</div>
+                          <div className="text-green-600">+   maxRetries: 3,</div>
+                          <div className="text-green-600">+   exponentialBackoff: true,</div>
+                          <div className="text-green-600">+   onError: (err) {'>'} logger.error('stripe_charge_failed', err)</div>
+                          <div className="text-green-600">+ {'}'});</div>
+                        </div>
+                      )}
+                      {pattern.id === 'safe-retry' && (
+                        <div className="text-muted-foreground">
+                          ✅ Already implements the recommended pattern
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <Separator />
             
             <div>
               <p className="font-medium text-sm">Commit Message:</p>
