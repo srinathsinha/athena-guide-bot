@@ -152,7 +152,7 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
                   onClick={() => handlePatternSelect('pattern-c')}
                   className={`text-2xl hover:scale-110 transition-transform ${selectedPattern === 'pattern-c' ? 'bg-primary/10 rounded p-1' : 'hover:bg-muted/50 rounded p-1'}`}
                 >
-                  ©️
+                  🅲️
                 </button>
                 <div className="flex-1">
                   <div className="font-medium">Enhanced with metrics **Recommended**</div>
@@ -184,7 +184,7 @@ export function ExpertQAScenario({ gap, onComplete }: ExpertQAScenarioProps) {
           isThread
         >
           <div className="space-y-3">
-            <p>©️ <strong>Pattern C is the way to go.</strong></p>
+            <p>🅲️ <strong>Pattern C is the way to go.</strong></p>
             <div className="bg-green-50 border border-green-200 rounded p-3">
               <p className="text-green-800 text-sm font-medium mb-2">Why Pattern C:</p>
               <div className="text-sm text-green-700 space-y-1">
