@@ -62,7 +62,7 @@ export default function Welcome() {
                   <BarChart3 className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1">Experts can't assess how good Resolve is during/right after onboarding</h3>
+                  <h3 className="font-semibold mb-1">Experts can't assess slope of hill-climb to quality</h3>
                   <p className="text-sm text-muted-foreground">No visibility into system performance during critical early stages</p>
                 </div>
               </div>
