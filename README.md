@@ -2,7 +2,8 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/c182d76b-ef0a-49c2-aaea-6f0072c21720
+**Demo URL**: https://athena-guide-bot.lovable.app/
+**Project URL**: https://lovable.dev/projects/c182d76b-ef0a-49c2-aaea-6f0072c21720
 
 ## How can I edit this code?
 
